@@ -1,4 +1,5 @@
-module.exports = (sequelize, DataTypes) => sequelize.define("Atividade", 
+module.exports = (sequelize, DataTypes) => {
+    const Atividade = sequelize.define("Atividade", 
     {
         idAtividade: {
             type: DataTypes.INTEGER,
@@ -31,3 +32,14 @@ module.exports = (sequelize, DataTypes) => sequelize.define("Atividade",
         timestamps: false
     }
 );
+
+    Atividade.associate = function(models) {
+        Atividade.belongsToMany(models.Aluno, {
+            through: models.AlunoAtividade,
+            foreignkey: 'ID_ATIVIDADE',
+            otherKey: 'ID_ALUNO'
+        });
+    }
+
+    return Atividade;
+}
